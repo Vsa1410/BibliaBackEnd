@@ -5,17 +5,18 @@ const expo = new Expo();
 let pushTokens= ["ExponentPushToken[qhfKIuMrrSP2i0uKjiZFem]","ExponentPushToken[E4Unw3Dvafz2TzTspeVNOK]"]
 
 //create a notification message
-let message = {
-    to: pushTokens,
-    sound: 'default',
-    body: 'Versículo do dia!!',
-    data: {
-        route: "/search",
-        
-      }
-}
 
-async function sendNotification(){
+async function sendNotification(tokens){
+    
+    let message = {
+        to: tokens,
+        sound: 'default',
+        body: 'Versículo do dia!!',
+        data: {
+            route: "/search",
+            
+          }
+    }
     let chunks = expo.chunkPushNotifications([message]);
     let tickets = [];
 
@@ -58,4 +59,5 @@ async function sendNotification(){
         }
     }
 }
-sendNotification()
+
+module.exports= sendNotification
