@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "@prisma/client": "^4.11.0",
+    "cors": "^2.8.5",
     "expo-server-sdk": "^3.7.0",
     "express": "^4.18.2",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.21"
   },
   "name": "newback",
   "version": "1.0.0",

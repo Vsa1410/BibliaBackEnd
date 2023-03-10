@@ -2,7 +2,7 @@ const {Expo} = require('expo-server-sdk');
 
 const expo = new Expo();
 
-let pushTokens= ["ExponentPushToken[qhfKIuMrrSP2i0uKjiZFem]","ExponentPushToken[4jTBLmAcFjlbzXLlXRI0_x]"]
+let pushTokens= ["ExponentPushToken[qhfKIuMrrSP2i0uKjiZFem]","ExponentPushToken[E4Unw3Dvafz2TzTspeVNOK]"]
 
 //create a notification message
 let message = {

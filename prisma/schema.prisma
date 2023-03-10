@@ -14,8 +14,14 @@ model Post {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   title       String      
   body        String
+  categories  String
+  media       String?
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String      @db.ObjectId
+
+  createdAt   DateTime  @default(now())
+
+  updatedAt    DateTime    @updatedAt
 }
 
 model User {
@@ -23,14 +29,30 @@ model User {
   email       String      @unique
   name        String?
   posts       Post[]
+
+  createdAt   DateTime  @default(now())
+
+  updatedAt    DateTime    @updatedAt
 }
 
 model GeneralUser{
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   token       String?
+  name        String
+  favorites   String?
+  email       String      @unique
+  password    String
+
+  createdAt   DateTime  @default(now())
+
+  updatedAt    DateTime    @updatedAt
 
 }
 model Tokens{
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   token       String
+
+  createdAt   DateTime  @default(now())
+
+  updatedAt    DateTime    @updatedAt
 }
