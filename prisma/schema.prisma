@@ -50,9 +50,9 @@ model GeneralUser{
 }
 model Tokens{
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  token       String
+  token       String      @unique
 
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime    @default(now())
 
-  updatedAt    DateTime    @updatedAt
+  updatedAt    DateTime   @updatedAt
 }
