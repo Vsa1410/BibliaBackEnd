@@ -11,9 +11,10 @@ async function sendNotification(tokens){
     let message = {
         to: tokens,
         sound: 'default',
-        body: 'Versículo do dia!!',
+        subtitle: 'Faça o seu devocional',
+        body:'É só acessar na aba Planos',
         data: {
-            route: "/search",
+            route: "/plans",
             
           }
     }
