@@ -1,4 +1,4 @@
-# fly.toml file generated for bibliabackend on 2023-03-09T11:52:42-03:00
+# fly.toml file generated for bibliabackend on 2023-03-12T14:54:23-03:00
 
 app = "bibliabackend"
 kill_signal = "SIGINT"
