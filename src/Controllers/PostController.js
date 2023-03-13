@@ -31,6 +31,13 @@ module.exports = {
         })
         res.json(posts)
     },
+    //find plans
+    async findVerses(req,res){
+        const posts = await prisma.post.findMany({
+            where: {categories: 'verseoftheday'},
+        })
+        res.json(posts)
+    },
     //change some post
     async change(req,res){
         const {id} = req.params;

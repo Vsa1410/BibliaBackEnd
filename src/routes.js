@@ -13,6 +13,7 @@ const prisma = new PrismaClient()
 
 //posts ROUTES
 routes.get('/devotionals/', PostController.findDevotionals)
+routes.get('/verseoftheday/',PostController.findVerses)
 routes.get('/plans', PostController.findPlans);
 routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.change);

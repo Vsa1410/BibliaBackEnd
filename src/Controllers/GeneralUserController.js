@@ -1,5 +1,6 @@
 const { PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient()
+const bcrypt = require('bcrypt')
 
 module.exports = {
     async store(req,res){
@@ -12,8 +13,15 @@ module.exports = {
                 favorites:favorites,
                 email:email,
                 password:password
+            },
+            hooks:{
+                beforeCreate: async (generalUser) =>{
+                    const hashedPassword = await bcrypt.hash(generalUser.password, 10)
+                    generalUser.password = hashedPassword
+                }
             }
         })
+        res.json(generalUser)
     },
     async change(req,res){
         const {id, name, token, favorites, email, password} = req.body;
