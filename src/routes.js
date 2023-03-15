@@ -3,7 +3,7 @@ const app = express();
 const { PrismaClient} = require('@prisma/client');
 const PostController = require('./Controllers/PostController');
 const UserControllers=require('./Controllers/UserControllers');
-
+const authController = require('./Controllers/AuthController/auth.js')
 const GeneralUserController = require('./Controllers/GeneralUserController');
 const TokensControllers = require('./Controllers/TokensControllers');
 const routes = express.Router()
@@ -27,14 +27,15 @@ routes.put('/users/:id', UserControllers.change);
 routes.delete('users/:id', UserControllers.delete);
 
 //GeneralUsers routes
-routes.post('/generalUser', GeneralUserController.store)
-routes.put('/generalUser/:id', GeneralUserController.change);
-routes.delete('/generalUser/id', GeneralUserController.delete);
-
+routes.post('/generaluser', GeneralUserController.store);
+routes.get('/generaluser/:id', GeneralUserController.findUserInformation)
 
 //All Tokens routes
 routes.post('/tokens', TokensControllers.storeTokens);
 routes.get('/tokens', TokensControllers.getTokens);
+
+//login route
+routes.post('/login', authController.login)
 
 
 

@@ -1,32 +1,61 @@
-const { PrismaClient} = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 module.exports = {
-    async store(req,res){
-        const {name, token, favorites, email, password} = req.body;
+    async findUserInformation (req, res){
+        const {id} = req.params;
+        const generalUser = await prisma.generalUser.findUnique({
+            where:{
+                id:id
+            }
+        })
+        return res.json(generalUser)
+    },
 
-        const generalUser = prisma.generalUser.create({
+    async store(req,res){
+
+            //middleware to change the password to hashed password
+            prisma.$use(async(params, next)=>{
+                if( params.model === "GeneralUser" && params.action === "create" ) {
+                    const hashedPassword = await bcrypt.hash(params.args.data.password, 10);
+                    params.args.data.password = hashedPassword;
+            
+                }
+                const result = await next(params)
+        
+                return result
+            })
+
+        
+        
+            //middleware to change the email to LowerCase    
+            prisma.$use(async (params, next) => {
+                if (params.model == 'GeneralUser' && params.action == 'create') {
+                    params.args.data.email = params.args.data.email.toLowerCase()
+                }
+                return next(params)
+            })
+            
+            
+            
+        const {name, token, favorites, email, password} = req.body;
+        const generalUser = await prisma.generalUser.create({
             data:{
                 name:name,
                 token:token,
                 favorites:favorites,
                 email:email,
                 password:password
-            },
-            hooks:{
-                beforeCreate: async (generalUser) =>{
-                    const hashedPassword = await bcrypt.hash(generalUser.password, 10)
-                    generalUser.password = hashedPassword
-                }
             }
+            
         })
-        res.json(generalUser)
+        return res.json(generalUser)
     },
     async change(req,res){
         const {id, name, token, favorites, email, password} = req.body;
 
-        const generalUser = prisma.generalUser.update({
+        const generalUser = await prisma.generalUser.update({
             where:{
                 id:id
             },

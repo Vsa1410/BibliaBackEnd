@@ -11,6 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Post {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   title       String      
@@ -37,6 +38,9 @@ model User {
 }
 
 model GeneralUser{
+
+  
+
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   token       String?
   name        String
@@ -48,7 +52,10 @@ model GeneralUser{
 
   updatedAt    DateTime    @updatedAt
 
-}
+  
+
+  }
+
 model Tokens{
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   token       String      @unique
