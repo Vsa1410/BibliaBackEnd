@@ -14,11 +14,17 @@ datasource db {
 
 model Post {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+ 
   title       String      
+ 
   body        String
+ 
   categories  String
+ 
   media       String?
+ 
   author      User        @relation(fields: [authorId], references: [id])
+ 
   authorId    String      @db.ObjectId
 
   createdAt   DateTime  @default(now())
@@ -28,8 +34,11 @@ model Post {
 
 model User {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  
   email       String      @unique
+
   name        String?
+  
   posts       Post[]
 
   createdAt   DateTime  @default(now())
@@ -42,11 +51,16 @@ model GeneralUser{
   
 
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  
   token       String?
+
   name        String
-  favorites   String?
+  
   email       String      @unique
+ 
   password    String
+
+  favorites   Favorites[]
 
   createdAt   DateTime  @default(now())
 
@@ -58,9 +72,42 @@ model GeneralUser{
 
 model Tokens{
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+ 
   token       String      @unique
 
   createdAt   DateTime    @default(now())
 
   updatedAt    DateTime   @updatedAt
+}
+model Favorites {
+  id         String       @id @default(auto())  @map("_id") @db.ObjectId
+
+  text       String      @unique
+
+  book       Int    
+
+  chapter    Int
+
+  verse      Int
+
+  author      GeneralUser        @relation(fields: [authorId], references: [id])
+
+  authorId    String             @db.ObjectId
+
+  createdAt   DateTime           @default(now())
+
+  updatedAt   DateTime           @updatedAt
+
+
+}
+model VerseOfDay{
+  id        String            @id @default(auto())  @map("_id") @db.ObjectId
+
+  text      String
+
+  reference String
+
+  createdAt DateTime          @default(now())
+
+  updatedAt DateTime          @updatedAt
 }

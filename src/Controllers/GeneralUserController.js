@@ -8,7 +8,8 @@ module.exports = {
         const generalUser = await prisma.generalUser.findUnique({
             where:{
                 id:id
-            }
+            },
+            
         })
         return res.json(generalUser)
     },
@@ -39,12 +40,12 @@ module.exports = {
             
             
             
-        const {name, token, favorites, email, password} = req.body;
+        const {name, token, email, password} = req.body;
         const generalUser = await prisma.generalUser.create({
             data:{
                 name:name,
                 token:token,
-                favorites:favorites,
+                
                 email:email,
                 password:password
             }
@@ -53,7 +54,7 @@ module.exports = {
         return res.json(generalUser)
     },
     async change(req,res){
-        const {id, name, token, favorites, email, password} = req.body;
+        const {id, name, token, email, password} = req.body;
 
         const generalUser = await prisma.generalUser.update({
             where:{
@@ -62,7 +63,7 @@ module.exports = {
             data:{
                 name:name,
                 token:token,
-                favorites:favorites,
+                
                 email:email,
                 password:password
             }
