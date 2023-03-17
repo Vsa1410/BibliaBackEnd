@@ -24,7 +24,7 @@ authController.login = async (req,res)=>{
             return res.status(401).json({message:'Senha Incorreta'});
         }else{
             
-            const token = jwt.sign({userId:generalUser.id}, process.env.JWT_SECRET,{
+            const token = jwt.sign({userId:generalUser.id}, "sasdlolkasdhnlkerhn",{
                 expiresIn: '1h'
             });
             return res.status(200).json({token})
