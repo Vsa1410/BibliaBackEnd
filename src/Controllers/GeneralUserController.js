@@ -18,21 +18,28 @@ module.exports = {
 
             //middleware to change the password to hashed password
             prisma.$use(async(params, next)=>{
-                if( params.model === "GeneralUser" && params.action === "create" ) {
-                    const hashedPassword = await bcrypt.hash(params.args.data.password, 10);
-                    params.args.data.password = hashedPassword;
+                if( params.model === "GeneralUser" && (params.action === "create" || params.action=="update") ) {
+                    try{
+                        const salt = await bcrypt.genSalt(10)
+                        const hashedPassword = await bcrypt.hash(params.args.data.password, salt);
+                        params.args.data.password = hashedPassword;
+                        await next(params)
+                        
+                    }catch(error){
+                        next(error)
+
+                    }
             
                 }
-                const result = await next(params)
         
-                return result
+               
             })
 
         
         
             //middleware to change the email to LowerCase    
             prisma.$use(async (params, next) => {
-                if (params.model == 'GeneralUser' && params.action == 'create') {
+                if (params.model == 'GeneralUser' && (params.action == 'create' || params.action =='update')) {
                     params.args.data.email = params.args.data.email.toLowerCase()
                 }
                 return next(params)

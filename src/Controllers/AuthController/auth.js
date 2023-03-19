@@ -26,7 +26,7 @@ authController.login = async (req,res)=>{
                 if (result) {
                 
                 const token = jwt.sign({userId:generalUser.id}, process.env.JWT_SECRET,{
-                    expiresIn: '1h'
+                    expiresIn: '1y'
                 });
                 
                 res.status(200).json({token})
