@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
+require('dotenv').config()
 
 const prisma = new PrismaClient();
 
 
 const authController= {};
+
 
 authController.login = async (req,res)=>{
     try {
@@ -17,22 +19,35 @@ authController.login = async (req,res)=>{
         })
         if(!generalUser){
             res.status(401).json({message:"Usuário não encontrado!"})
+        }else{
+
+            bcrypt.compare(password, generalUser.password)
+            .then((result) => {
+                if (result) {
+                
+                const token = jwt.sign({userId:generalUser.id}, process.env.JWT_SECRET,{
+                    expiresIn: '1h'
+                });
+                
+                res.status(200).json({token})
+                } else {
+                console.log('Senha incorreta!');
+                res.status(401).json("Senha incorreta")
+                }
+            })
+            .catch((err) => console.error(err));
+            
+            
         }
         
-        const passwordMatch = await bcrypt.compare(password, generalUser.password );
-        if(!passwordMatch){
-            return res.status(401).json({message:'Senha Incorreta'});
-        }else{
-            
-            const token = jwt.sign({userId:generalUser.id}, "sasdlolkasdhnlkerhn",{
-                expiresIn: '1h'
-            });
-            return res.status(200).json({token})
+
+          
+        }catch{
+            res.status(401).json("Não foi possível realizar agora, tente mais tarde")
         }
 
-    } catch (error) {
-        
-    }
-}
+    }       
+    
+
 
 module.exports= authController
