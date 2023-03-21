@@ -21,21 +21,30 @@ authController.login = async (req,res)=>{
             res.status(401).json({message:"Usuário não encontrado!"})
         }else{
 
-            bcrypt.compare(password, generalUser.password)
+           await bcrypt.compare(password, generalUser.password)
             .then((result) => {
-                if (result) {
-                
-                const token = jwt.sign({userId:generalUser.id}, process.env.JWT_SECRET,{
-                    expiresIn: '1y'
-                });
-                
-                res.status(200).json({token})
-                } else {
-                console.log('Senha incorreta!');
-                res.status(401).json("Senha incorreta")
+                console.log(result)
+                if(result === true){
+                    
+                    const token = jwt.sign({userId:generalUser.id}, process.env.JWT_SECRET,{
+                        expiresIn: '1y'
+                    });
+                    
+                    res.status(200).json({token})
                 }
+                if(result === false){
+                    res.status(401).json("Senha incorreta")
+                }
+                
+                
+                
             })
-            .catch((err) => console.error(err));
+            
+            .catch((err) => {console.error(err)
+            console.log('Senha incorreta!');
+            res.status(401).json("Senha incorreta")
+            
+        });
             
             
         }

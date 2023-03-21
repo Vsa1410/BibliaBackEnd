@@ -11,7 +11,10 @@ module.exports = {
                 token:token
             }
         })
-        res.json(userToken)
+        .then(
+            res.json(userToken)
+        )
+        .catch(err=>res.json(err))
     },
     async getTokens(req, res){
         const  tokens  = await prisma.tokens.findMany()
