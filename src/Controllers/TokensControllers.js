@@ -13,7 +13,7 @@ module.exports = {
         })
         .then(()=>{
 
-            res.send(userToken)
+            res.json(userToken)
         }
 
         )

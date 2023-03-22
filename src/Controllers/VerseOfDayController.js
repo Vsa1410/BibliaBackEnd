@@ -5,7 +5,7 @@ const sendNotification = require('../server')
 async function getTokens(req, res){
     const  tokens  = await prisma.tokens.findMany()
     getTokensToNotify(tokens)
-    res.send(tokens)
+    res.json(tokens)
 }
 
 

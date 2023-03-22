@@ -9,7 +9,7 @@ generator client {
 datasource db {
   
   provider = "mongodb"
-  url      = "DATABASE_URL"
+  url      = "mongodb+srv://vsa141094:4RW4wAUmLHBa0hsf@cluster0.vl8mkoa.mongodb.net/Biblia?retryWrites=true&w=majority"
 }
 
 
