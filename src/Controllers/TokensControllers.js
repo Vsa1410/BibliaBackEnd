@@ -11,10 +11,24 @@ module.exports = {
                 token:token
             }
         })
-        .then(
-            res.json(userToken)
+        .then(()=>{
+
+            res.send(userToken)
+        }
+
         )
-        .catch(err=>res.json(err))
+        
+        .catch ((err)=> {
+            if (err.code === 'P2002') {
+              console.log(`Token ja cadastrado`)
+            } else {
+              console.error(err)
+            }
+          })
+          
+            
+          
+        
     },
     async getTokens(req, res){
         const  tokens  = await prisma.tokens.findMany()

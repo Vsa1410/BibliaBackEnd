@@ -33,7 +33,8 @@ authController.login = async (req,res)=>{
                     res.status(200).json({token})
                 }
                 if(result === false){
-                    res.status(401).json("Senha incorreta")
+                    res.status(401).send({error: 'Senha Incorreta'})
+                    
                 }
                 
                 

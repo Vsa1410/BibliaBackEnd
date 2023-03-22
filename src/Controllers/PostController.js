@@ -31,6 +31,16 @@ module.exports = {
         })
         res.json(posts)
     },
+    async findByCategory(req, res){
+        const {categories} = req.params
+        console.log(categories)
+        const posts = await prisma.post.findMany({
+            where:{
+                categories:categories
+            }
+        })
+       res.json(posts)
+    },
     //find plans
     async findVerses(req,res){
         const posts = await prisma.post.findMany({
