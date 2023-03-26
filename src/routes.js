@@ -32,7 +32,7 @@ routes.delete('users/:id', UserControllers.delete);
 //GeneralUsers routes
 routes.post('/generaluser', GeneralUserController.store);
 routes.get('/generaluser/:id', GeneralUserController.findUserInformation)
-routes.put('/generaluser/:id', GeneralUserController.change)
+routes.put('/generaluser/', GeneralUserController.change)
 //All Tokens routes
 routes.post('/tokens', TokensControllers.storeTokens);
 routes.get('/tokens', TokensControllers.getTokens);

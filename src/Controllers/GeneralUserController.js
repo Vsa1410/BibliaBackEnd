@@ -18,7 +18,7 @@ module.exports = {
 
             //middleware to change the password to hashed password
             prisma.$use(async(params, next)=>{
-                if( params.model === "GeneralUser" && (params.action === "create" || params.action=="update") ) {
+                if( params.model === "GeneralUser" && (params.action === "create") ) {
                     try{
                         const salt = await bcrypt.genSalt(10)
                         const hashedPassword = await bcrypt.hash(params.args.data.password, salt);
@@ -29,11 +29,9 @@ module.exports = {
                         next(error)
 
                     }
-            
                 }
-        
-               
             })
+            
 
         
         
@@ -61,11 +59,26 @@ module.exports = {
         return res.json(generalUser)
     },
     async change(req,res){
+        prisma.$use(async(params, next)=>{
+            if( params.model === "GeneralUser" && (params.action === "update") ) {
+                try{
+                    const salt = await bcrypt.genSalt(10)
+                    const hashedPassword = await bcrypt.hash(params.args.data.password, salt);
+                    params.args.data.password = hashedPassword;
+                    await next(params)
+                    
+                }catch(error){
+                    next(error)
+
+                }
+            }
+        })
         const {id, name, token, email, password} = req.body;
+
 
         const generalUser = await prisma.generalUser.update({
             where:{
-                id:id
+                email:email
             },
             data:{
                 name:name,
