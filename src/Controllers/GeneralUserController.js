@@ -73,18 +73,16 @@ module.exports = {
                 }
             }
         })
-        const {id, name, token, email, password} = req.body;
-
+        const { email, password} = req.body;
+        console.log(email+password)
 
         const generalUser = await prisma.generalUser.update({
             where:{
                 email:email
             },
             data:{
-                name:name,
-                token:token,
+                                
                 
-                email:email,
                 password:password
             }
         })
